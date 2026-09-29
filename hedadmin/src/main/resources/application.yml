@@ -1,0 +1,51 @@
+server:
+  servlet:
+    context-path: /hedadmin
+  port: 8081
+
+spring:
+  datasource:
+     driver-class-name: com.mysql.cj.jdbc.Driver
+     url: jdbc:mysql://localhost:3306/mydb
+     username: root
+     password: 123456
+     jmx:
+       enabled: false  # 关闭 Spring Boot 的 JMX 功能
+  main:
+    allow-bean-definition-overriding: true
+  # MyBatis-Plus 配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 控制台打印 SQL
+  global-config:
+    db-config:
+      logic-delete-field: deleted      # 逻辑删除字段
+      logic-delete-value: 1            # 已删除
+      logic-not-delete-value: 0        # 未删除
+  type-aliases-package: com.example.admin.entity
+# springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'mydoc'
+      paths-to-match: '/**'
+      packages-to-scan: com.example.hedadmin.controler
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true # 必须开启
+  production: false # 生产模式要设false，true会直接隐藏所有接口
+# 原生springdoc（SpringBoot3用）/swagger2（SpringBoot2）也要开启
+  setting:
+    language: zh_cn
+    swagger-model-name: 实体类列表
+
+rustfs:
+  endpoint: http://192.168.29.50:32045
+  bucketName: simple
+  admin-access-key: admin
+  admin-secret-key: 123456
